@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DoNow — Get Things Done</title>
+<meta name="description" content="DoNow turns everyday problems into simple, actionable plans.">
+<style>
+:root{--bg:#f7f8fc;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--brand:#5b5ce2;--brand2:#7c3aed;--soft:#eef0ff;--shadow:0 20px 60px rgba(20,25,50,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--text);background:var(--bg)}
+a{text-decoration:none;color:inherit}.nav{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:10}
+.logo{font-size:24px;font-weight:800;letter-spacing:-.7px}.logo span{color:var(--brand)}
+.navlinks{display:flex;gap:28px;color:#4b5563;font-size:14px}.navbtn{background:#111827;color:white;padding:11px 17px;border-radius:10px;font-weight:650;font-size:14px}
+.hero{padding:82px 6% 55px;text-align:center;max-width:1050px;margin:auto}.pill{display:inline-flex;gap:8px;align-items:center;background:var(--soft);color:#4546b9;border-radius:999px;padding:8px 13px;font-size:13px;font-weight:700}
+h1{font-size:clamp(42px,6vw,70px);line-height:1.02;letter-spacing:-3px;margin:20px 0 18px}.hero p{font-size:19px;color:var(--muted);max-width:650px;margin:0 auto 32px;line-height:1.6}
+.search{max-width:760px;margin:auto;background:white;border:1px solid #dfe2eb;border-radius:18px;padding:8px;box-shadow:var(--shadow);display:flex;gap:8px}.search input{flex:1;border:0;outline:0;padding:16px;font-size:16px;min-width:0}.search button{border:0;background:var(--brand);color:white;border-radius:12px;padding:0 23px;font-size:15px;font-weight:750;cursor:pointer}
+.quick{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:17px}.chip{background:white;border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:#596174;font-size:13px;cursor:pointer}
+.section{padding:35px 6% 80px;max-width:1200px;margin:auto}.sectionhead{display:flex;justify-content:space-between;align-items:end;margin-bottom:20px}.section h2{font-size:28px;letter-spacing:-1px;margin:0}.sectionhead p{color:var(--muted);margin:5px 0 0}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;transition:.2s;cursor:pointer}.card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.icon{width:42px;height:42px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:20px;margin-bottom:18px}.card h3{font-size:16px;margin:0 0 7px}.card p{font-size:13px;color:var(--muted);line-height:1.5;margin:0}
+.result{display:none;max-width:760px;margin:25px auto 0;text-align:left;background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow)}.result.show{display:block}.result h3{margin-top:0}.result ol{line-height:1.9;color:#4b5563}.result .notice{background:#f7f7ff;border-radius:12px;padding:13px;color:#4b4cae;font-size:13px}
+.footer{background:#111827;color:#cbd5e1;padding:45px 6%;display:flex;justify-content:space-between;gap:30px}.footer strong{color:#fff}.footer small{color:#94a3b8}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}.navlinks{display:none}.hero{padding-top:55px}.search{flex-direction:column}.search button{height:50px}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.hero h1{letter-spacing:-2px}.footer{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="#">Do<span>Now</span></a>
+  <div class="navlinks"><a href="#tools">Tools</a><a href="#how">How it works</a><a href="#about">About</a></div>
+  <a class="navbtn" href="#tools">Try free</a>
+</nav>
+
+<main>
+<section class="hero">
+  <div class="pill">✦ Your everyday AI problem solver</div>
+  <h1>Tell us what you need.<br>We'll help you <span style="color:#5b5ce2">DoNow.</span></h1>
+  <p>Turn confusing tasks, questions and everyday problems into clear, simple next steps — in seconds.</p>
+  <div class="search">
+    <input id="problem" placeholder="e.g. “Help me write a professional job application”">
+    <button onclick="solve()">Get my plan →</button>
+  </div>
+  <div class="quick">
+    <button class="chip" onclick="fill('Create a professional CV')">Create a CV</button>
+    <button class="chip" onclick="fill('Make a monthly budget')">Make a budget</button>
+    <button class="chip" onclick="fill('Write a professional email')">Write an email</button>
+    <button class="chip" onclick="fill('Create a study plan')">Study plan</button>
+  </div>
+  <div id="result" class="result">
+    <h3>Your DoNow plan</h3>
+    <div class="notice">This demo shows the product experience. Connect an AI API to generate personalized answers.</div>
+    <ol>
+      <li>Clearly describe the goal you want to achieve.</li>
+      <li>Break the task into the smallest practical steps.</li>
+      <li>Start with the first step today and collect any information you need.</li>
+      <li>Review the result and adjust the plan based on your situation.</li>
+    </ol>
+    <button class="navbtn" onclick="document.getElementById('result').classList.remove('show')">Done</button>
+  </div>
+</section>
+
+<section class="section" id="tools">
+  <div class="sectionhead"><div><h2>Popular tools</h2><p>Simple tools for everyday work.</p></div></div>
+  <div class="grid">
+    <div class="card" onclick="fill('Create a professional CV')"><div class="icon">📄</div><h3>CV & Resume</h3><p>Create a clear, professional resume.</p></div>
+    <div class="card" onclick="fill('Create a personal budget')"><div class="icon">💰</div><h3>Budget Planner</h3><p>Organize income, expenses and savings.</p></div>
+    <div class="card" onclick="fill('Write a professional email')"><div class="icon">✉️</div><h3>Email Writer</h3><p>Turn rough ideas into polished emails.</p></div>
+    <div class="card" onclick="fill('Create a study plan for my exam')"><div class="icon">📚</div><h3>Study Planner</h3><p>Build a realistic study schedule.</p></div>
+    <div class="card" onclick="fill('Plan a trip')"><div class="icon">✈️</div><h3>Trip Planner</h3><p>Build an itinerary around your needs.</p></div>
+    <div class="card" onclick="fill('Help me prepare for a job interview')"><div class="icon">💼</div><h3>Interview Prep</h3><p>Practice questions and strong answers.</p></div>
+    <div class="card" onclick="fill('Write a complaint letter')"><div class="icon">📝</div><h3>Letter Maker</h3><p>Create professional letters quickly.</p></div>
+    <div class="card" onclick="fill('Give me a step-by-step plan for my problem')"><div class="icon">✨</div><h3>AI Problem Solver</h3><p>Explain a problem and get next steps.</p></div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="sectionhead"><div><h2>How DoNow works</h2><p>No complicated menus. Just tell us what you need.</p></div></div>
+  <div class="grid">
+    <div class="card"><div class="icon">1</div><h3>Describe it</h3><p>Tell DoNow what you're trying to accomplish.</p></div>
+    <div class="card"><div class="icon">2</div><h3>Get a plan</h3><p>Receive simple, organized actions and useful output.</p></div>
+    <div class="card"><div class="icon">3</div><h3>Do the work</h3><p>Use the generated content, checklist or plan.</p></div>
+    <div class="card"><div class="icon">4</div><h3>Come back</h3><p>Save useful tools and solve your next task.</p></div>
+  </div>
+</section>
+</main>
+
+<footer class="footer" id="about">
+  <div><strong>DoNow</strong><br><small>Your simple everyday work assistant.</small></div>
+  <small>© 2026 DoNow. Built for a fast, simple web experience.</small>
+</footer>
+
+<script>
+function fill(text){document.getElementById('problem').value=text;document.getElementById('problem').focus()}
+function solve(){
+ const v=document.getElementById('problem').value.trim();
+ if(!v){document.getElementById('problem').focus();return}
+ document.getElementById('result').classList.add('show');
+ document.getElementById('result').scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>
