@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How internet speed tests work — and why results differ — SpeedMeter</title>
+<meta name="description" content="What happens during a speed test, why parallel connections are used, why the first seconds are discarded, and why two tests can disagree.">
+<meta name="theme-color" content="#080b14">
+<meta property="og:title" content="How internet speed tests work — and why results differ — SpeedMeter">
+<meta property="og:description" content="What happens during a speed test, why parallel connections are used, why the first seconds are discarded, and why two tests can disagree.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230d1220'/><path d='M56 12 30 56h18l-6 32 28-46H52z' fill='%2322d3ee'/></svg>">
+<link rel="stylesheet" href="../assets/styles.css">
+<script src="../assets/theme.js"></script>
+<script src="../assets/ads.js"></script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../index.html" aria-label="SpeedMeter home">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="currentColor" opacity=".08"/><path d="M56 12 30 56h18l-6 32 28-46H52z" fill="url(#bg1)"/><defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#818cf8"/></linearGradient></defs></svg>
+      <span>Speed<em>Meter</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Speed test</a>
+      <a href="../guides/index.html">Guides</a>
+      <a href="../about.html">About</a>
+    </div>
+    <div class="nav-right">
+      <button class="ghost" id="theme" type="button" aria-label="Switch colour theme" title="Switch theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+  <header class="page-head">
+    <p class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Guides</a></p>
+    <h1>How internet speed tests work</h1>
+    <p class="lede">A speed test looks like one number appearing on a dial. Underneath, it is a set of deliberate engineering choices — and knowing them tells you how much to trust the result.</p>
+    <p class="byline">SpeedMeter · updated September 2026</p>
+  </header>
+  <div class="ad-slot" data-ad-slot="REPLACE-top"></div>
+  <div class="prose">
+    <p>Every speed test does the same four things: time a tiny round trip, pull a lot of data down, push a lot of data up, and watch how steady the timings are. The differences between tests — and between two runs of the same test — come from the details.</p>
+
+    <h2>Measuring latency first</h2>
+    <p>The test opens with a burst of very small requests, each timed individually. Small matters: the payload must be trivial so that what is measured is the round trip rather than transfer time.</p>
+    <p>A single sample is unreliable, since one unlucky packet can be delayed by anything. So a series is taken — this site uses fourteen — and the reported ping is the <strong>median of the better samples</strong> rather than a plain average, which would be dragged upward by a single outlier. Jitter is calculated from the same set, as the average difference between consecutive samples, because that is what it describes: variation, not magnitude.</p>
+
+    <h2>Why downloads use several connections at once</h2>
+    <p>The most consequential choice in a speed test is how many connections it opens. A single TCP connection is frequently limited by something other than your line — the window size, the latency to the server, a per-connection cap at the far end. On a fast connection with any meaningful distance involved, one stream can report a fraction of what the line can do.</p>
+    <p>Opening several in parallel — five, here — fills the pipe the way real usage does, since a browser loading a page or a video player buffering ahead both use multiple connections. This is why a test that appears to under-report may simply be measuring one stream, and why parallel tests better reflect what you will actually get.</p>
+
+    <h2>Discarding the first second</h2>
+    <p>TCP does not begin at full speed. It starts cautiously and accelerates — the mechanism is called slow start — which means the opening moments of any transfer are unrepresentative. Include them and you understate the connection, badly on fast lines where the ramp is a large share of a short test.</p>
+    <p>The fix is a warm-up window: data still flows, but the first stretch — a second and a half in this test — is excluded from the final average. The gauge shows the live figure throughout, which is why the needle climbs steeply at the start and then settles.</p>
+
+    <h2>How the final figure is calculated</h2>
+    <p>The honest method is simple: count the bytes that actually arrived after the warm-up, divide by the time they took, convert to megabits. Note the conversion — <strong>a byte is eight bits</strong>, so a download running at 12.5 MB/s in your browser's download manager is a 100 Mbps connection. The two units being one factor of eight apart explains a great deal of confusion about whether a connection is performing.</p>
+    <p>The live number on the dial is smoothed, because raw per-instant throughput is spiky and an unsmoothed needle is unreadable. The final result is never smoothed — it comes from raw byte counts and elapsed time.</p>
+
+    <h2>The upload test is harder than it looks</h2>
+    <p>Uploads are measured the same way in reverse, with one wrinkle: the browser reports progress as data is handed to the operating system, which may be slightly ahead of what has genuinely crossed the network. A well-built test accounts for this by measuring over a long enough window and reconciling against completed transfers, rather than trusting instantaneous progress.</p>
+    <p>Upload speed deserves more attention than it gets. On many cable and DSL connections it is a small fraction of the download figure, and it is the number that decides whether your video calls look sharp, how long a cloud backup takes, and whether a large email attachment sends promptly.</p>
+
+    <h2>Why two tests disagree</h2>
+    <p>Differences between tools, or between two runs minutes apart, usually come down to:</p>
+    <ul>
+      <li><strong>Server location.</strong> A nearby server gives a better result than a distant one. Tests hosted by your own ISP flatter it, because the traffic never leaves their network.</li>
+      <li><strong>Number of connections.</strong> As above — single-stream tests report lower figures on fast lines.</li>
+      <li><strong>Test duration.</strong> Short tests are noisier and more affected by the ramp-up.</li>
+      <li><strong>Your own device.</strong> Browser, processor, and whatever else is running all place a ceiling on what can be measured.</li>
+      <li><strong>The moment.</strong> Networks are shared. A neighbour starting a download changes your result.</li>
+    </ul>
+    <p>A few per cent of variation between runs is normal and not worth investigating. Large swings are information: they usually mean interference or congestion rather than a faulty measurement.</p>
+
+    <div class="callout">
+      <p><strong>Getting a result you can rely on:</strong> use a cable, close everything else, disable any VPN, and run the test three times. Take the best figure as your realistic ceiling and the spread between runs as a measure of how stable your connection is.</p>
+    </div>
+
+    <h2>How much data a test uses</h2>
+    <p>Because a speed test runs for a fixed time rather than transferring a fixed amount, a faster connection moves more data. A full run commonly transfers between 100 MB and 500 MB, and considerably more on a gigabit line. On an uncapped home connection this is irrelevant; on a mobile or metered plan it is worth knowing before you run the test repeatedly.</p>  </div>
+  <div class="ad-slot" data-ad-slot="REPLACE-foot"></div>
+  <div class="cta">
+    <h3>Check your own connection</h3>
+    <p>Run the test and see where your line actually stands.</p>
+    <a class="btn primary" href="../index.html">Run the speed test</a>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-nav">
+      <div>
+        <h4>SpeedMeter</h4>
+        <p class="blurb">A free, no-clutter internet speed test that measures download, upload, ping and jitter straight from your browser — and explains what the numbers mean.</p>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="../index.html">Speed test</a></li>
+          <li><a href="../guides/index.html">Guides</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="../privacy.html">Privacy policy</a></li>
+          <li><a href="../terms.html">Terms of use</a></li>
+          <li><a href="../privacy.html#cookies">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-in">
+      <div>&copy; <span id="year">2026</span> SpeedMeter · an honest, no-clutter internet speed test.</div>
+      <div>Runs entirely in your browser. No accounts, no tracking, no stored results.</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

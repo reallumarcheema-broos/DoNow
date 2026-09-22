@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why your speed test is slower than the plan you pay for — SpeedMeter</title>
+<meta name="description" content="Nine reasons a speed test comes in under your advertised broadband speed, how to tell which one applies to you, and when it is worth calling your provider.">
+<meta name="theme-color" content="#080b14">
+<meta property="og:title" content="Why your speed test is slower than the plan you pay for — SpeedMeter">
+<meta property="og:description" content="Nine reasons a speed test comes in under your advertised broadband speed, how to tell which one applies to you, and when it is worth calling your provider.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230d1220'/><path d='M56 12 30 56h18l-6 32 28-46H52z' fill='%2322d3ee'/></svg>">
+<link rel="stylesheet" href="../assets/styles.css">
+<script src="../assets/theme.js"></script>
+<script src="../assets/ads.js"></script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../index.html" aria-label="SpeedMeter home">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="currentColor" opacity=".08"/><path d="M56 12 30 56h18l-6 32 28-46H52z" fill="url(#bg1)"/><defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#818cf8"/></linearGradient></defs></svg>
+      <span>Speed<em>Meter</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Speed test</a>
+      <a href="../guides/index.html">Guides</a>
+      <a href="../about.html">About</a>
+    </div>
+    <div class="nav-right">
+      <button class="ghost" id="theme" type="button" aria-label="Switch colour theme" title="Switch theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+  <header class="page-head">
+    <p class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Guides</a></p>
+    <h1>Why your speed test is slower than the plan you pay for</h1>
+    <p class="lede">Almost nobody gets the number on the box. Here is how much of a gap is normal, where it usually comes from, and how to work out which cause is yours.</p>
+    <p class="byline">SpeedMeter · updated September 2026</p>
+  </header>
+  <div class="ad-slot" data-ad-slot="REPLACE-top"></div>
+  <div class="prose">
+    <p>You pay for 500 Mbps. The test says 180. Before assuming you are being short-changed, it is worth knowing that the advertised figure and the measured one are describing different things — and that the gap between them is usually created inside your own home rather than out on the network.</p>
+    <p>Work through these in order. The first three explain the overwhelming majority of disappointing results.</p>
+
+    <h2>1. Wi-Fi is almost always the bottleneck</h2>
+    <p>This is the big one. An advertised speed describes what arrives at your router over the incoming line. Wi-Fi is a separate, shared, radio-based hop that comes after it, and it loses a lot on the way.</p>
+    <p>Real-world Wi-Fi throughput commonly lands between a third and two thirds of the link rate your device claims to be connected at, and that figure falls fast with distance, walls and interference. On the 2.4 GHz band, which reaches further but is far more crowded, seeing 50–80 Mbps is unremarkable even on a gigabit line. If your test is far below your plan, run it once more with an Ethernet cable plugged straight into the router. If the number jumps, the line is fine and the problem is your wireless.</p>
+
+    <h2>2. The device you are testing on has a ceiling</h2>
+    <p>A phone from 2017, a budget laptop, or any machine with an older wireless card physically cannot receive at gigabit speeds. Neither can a device plugged into a 100 Mbps Ethernet port — and plenty of cheap switches, powerline adapters and older routers still have them. A 100 Mbps port will report roughly 94 Mbps no matter what you pay for, which is one of the most common causes of a suspiciously round result.</p>
+    <p>Browsers add their own limit. A single browser tab on a modest processor struggles to saturate a multi-gigabit connection, because the work of receiving and discarding that much data is itself demanding.</p>
+
+    <h2>3. Something else is using the connection</h2>
+    <p>A console downloading an update, a cloud backup, a smart TV buffering ahead, another person on a video call — each takes a share, and the test only ever sees what is left over. Before a test you intend to take seriously, pause other downloads and get other devices off the network.</p>
+
+    <h2>4. "Up to" means exactly that</h2>
+    <p>Advertised speeds are usually maximums under ideal conditions, not guarantees. In the UK, providers must quote an average speed measured at peak time, and many jurisdictions require similar disclosure. Your contract likely contains a minimum guaranteed speed that is far lower than the headline — that minimum, not the headline, is what a complaint is measured against.</p>
+
+    <h2>5. Protocol overhead is real but small</h2>
+    <p>Some of the difference is simply the cost of moving data: packet headers, acknowledgements, encryption. Expect to lose a few per cent this way — on some technologies, such as DSL, rather more. This explains a 470 Mbps result on a 500 Mbps line. It does not explain a 180 Mbps one.</p>
+
+    <h2>6. Peak-hour congestion</h2>
+    <p>Between roughly 7pm and 11pm, everyone in your area is streaming at once. If your line is good in the morning and poor every evening, that is congestion, either in your provider's local network or at a peering point. It is a legitimate thing to complain about, and evidence of the pattern is what makes the complaint stick — test at several times of day over a week and keep the results.</p>
+
+    <h2>7. The router is old or overloaded</h2>
+    <p>An ISP-supplied router from five years ago may not support the speeds you have since upgraded to, and its processor can become the limit before the line does — particularly with a lot of devices connected. Routers also benefit from an occasional restart; leaving one running for a year is not the neutral act people assume.</p>
+
+    <h2>8. VPNs, proxies and security software</h2>
+    <p>A VPN routes your traffic through another server and encrypts it on the way. Halving your speed is a common outcome, and more if the server is distant or busy. Some antivirus suites inspect traffic in a way that imposes a similar cost. Turn both off for a clean test.</p>
+
+    <h2>9. The test server and the route to it</h2>
+    <p>Finally, any speed test measures a path, not a pipe. If the nearest edge server is unusually far away or the route is congested, the result reflects that. This matters less than people think on modern networks, but it is why two different speed tests can disagree by a noticeable margin.</p>
+
+    <div class="callout">
+      <p><strong>A clean test, in five steps:</strong> use an Ethernet cable; close other tabs and apps; pause downloads on every device; turn off any VPN; run the test three times and take the best result.</p>
+    </div>
+
+    <h2>When to actually call your provider</h2>
+    <p>Get in touch when you can show a pattern rather than a single bad number:</p>
+    <ul>
+      <li>A wired test consistently returns well under the minimum guaranteed speed in your contract.</li>
+      <li>Speed collapses at the same time every day, over several days.</li>
+      <li>The connection drops out repeatedly, or ping and jitter are erratic even when idle.</li>
+    </ul>
+    <p>Bring dates, times and figures. A record of wired tests taken at different hours turns "my internet feels slow" into something an engineer can act on — which is precisely what the history table on the <a href="../index.html">test page</a> is for.</p>  </div>
+  <div class="ad-slot" data-ad-slot="REPLACE-foot"></div>
+  <div class="cta">
+    <h3>Check your own connection</h3>
+    <p>Run the test and see where your line actually stands.</p>
+    <a class="btn primary" href="../index.html">Run the speed test</a>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-nav">
+      <div>
+        <h4>SpeedMeter</h4>
+        <p class="blurb">A free, no-clutter internet speed test that measures download, upload, ping and jitter straight from your browser — and explains what the numbers mean.</p>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="../index.html">Speed test</a></li>
+          <li><a href="../guides/index.html">Guides</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="../privacy.html">Privacy policy</a></li>
+          <li><a href="../terms.html">Terms of use</a></li>
+          <li><a href="../privacy.html#cookies">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-in">
+      <div>&copy; <span id="year">2026</span> SpeedMeter · an honest, no-clutter internet speed test.</div>
+      <div>Runs entirely in your browser. No accounts, no tracking, no stored results.</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

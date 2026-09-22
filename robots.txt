@@ -1,0 +1,9 @@
+# SpeedMeter
+# Replace the sitemap URL below with your own domain before going live.
+User-agent: *
+Allow: /
+
+User-agent: Mediapartners-Google
+Allow: /
+
+Sitemap: https://example.com/sitemap.xml

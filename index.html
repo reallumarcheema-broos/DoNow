@@ -10,198 +10,9 @@
 <meta property="og:description" content="Measure download, upload, ping and jitter in seconds.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230d1220'/><path d='M56 12 30 56h18l-6 32 28-46H52z' fill='%2322d3ee'/></svg>">
-<style>
-:root{
-  --bg:#080b14; --bg-2:#0b1020; --panel:rgba(255,255,255,.04); --panel-2:rgba(255,255,255,.025);
-  --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.055);
-  --text:#e9edf7; --muted:#8e99b3; --dim:#606d89;
-  --accent:#22d3ee; --accent-2:#818cf8; --good:#34d399; --warn:#fbbf24; --bad:#fb7185;
-  --track:rgba(255,255,255,.07);
-  --shadow:0 30px 80px rgba(0,0,0,.55);
-  --radius:20px;
-}
-html[data-theme="light"]{
-  --bg:#f5f7fc; --bg-2:#eef1f9; --panel:#ffffff; --panel-2:#ffffff;
-  --line:#e2e7f2; --line-2:#edf0f7;
-  --text:#101528; --muted:#5d6782; --dim:#8b93a8;
-  --accent:#0ea5b7; --accent-2:#5b5ce2; --good:#0f9d68; --warn:#b4790b; --bad:#e11d48;
-  --track:rgba(16,21,40,.09);
-  --shadow:0 24px 60px rgba(20,25,50,.10);
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0; color:var(--text); background:var(--bg);
-  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
-  -webkit-font-smoothing:antialiased; overflow-x:hidden;
-}
-body::before{
-  content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
-  background:
-    radial-gradient(900px 520px at 18% -8%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
-    radial-gradient(760px 480px at 88% 4%, color-mix(in srgb, var(--accent-2) 20%, transparent), transparent 70%),
-    linear-gradient(180deg, var(--bg-2), var(--bg) 55%);
-  opacity:.9;
-}
-body::after{
-  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.35;
-  background-image:linear-gradient(var(--line-2) 1px,transparent 1px),linear-gradient(90deg,var(--line-2) 1px,transparent 1px);
-  background-size:64px 64px;
-  mask-image:radial-gradient(70% 55% at 50% 0%,#000,transparent 85%);
-  -webkit-mask-image:radial-gradient(70% 55% at 50% 0%,#000,transparent 85%);
-}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
-
-/* ---------- nav ---------- */
-.nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  background:color-mix(in srgb,var(--bg) 72%,transparent);border-bottom:1px solid var(--line-2)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:70px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.6px;font-size:20px}
-.brand svg{width:30px;height:30px;flex:none}
-.brand em{font-style:normal;background:linear-gradient(92deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.nav-links{display:flex;gap:26px;font-size:14px;color:var(--muted)}
-.nav-links a:hover{color:var(--text)}
-.nav-right{display:flex;align-items:center;gap:12px}
-.ghost{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;border:1px solid var(--line);
-  background:var(--panel);color:var(--muted);cursor:pointer;transition:.18s}
-.ghost:hover{color:var(--text);border-color:var(--accent);transform:translateY(-1px)}
-.ghost svg{width:17px;height:17px}
-
-/* ---------- hero ---------- */
-.hero{text-align:center;padding:58px 0 8px}
-.tag{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);
-  color:var(--muted);border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:600;letter-spacing:.2px}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 4px color-mix(in srgb,var(--good) 22%,transparent)}
-h1{font-size:clamp(34px,5.4vw,58px);line-height:1.04;letter-spacing:-2.2px;margin:18px 0 14px;font-weight:800}
-h1 em{font-style:normal;background:linear-gradient(92deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{color:var(--muted);font-size:17px;line-height:1.6;max-width:580px;margin:0 auto}
-
-/* ---------- tester ---------- */
-.tester{position:relative;margin:34px auto 0;border:1px solid var(--line);border-radius:26px;
-  background:linear-gradient(180deg,var(--panel),var(--panel-2));box-shadow:var(--shadow);overflow:hidden}
-.tester::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(520px 260px at 50% -10%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 70%)}
-.phases{position:relative;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:20px 20px 0}
-.phase{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:650;color:var(--dim);
-  border:1px solid var(--line-2);background:var(--panel-2);border-radius:999px;padding:7px 13px;transition:.2s}
-.phase i{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.55}
-.phase.active{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,transparent);
-  background:color-mix(in srgb,var(--accent) 10%,transparent)}
-.phase.active i{opacity:1;animation:pulse 1.1s ease-in-out infinite}
-.phase.done{color:var(--good);border-color:color-mix(in srgb,var(--good) 35%,transparent)}
-.phase.done i{opacity:1}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.7);opacity:.45}}
-
-.gauge-wrap{position:relative;display:grid;place-items:center;padding:12px 20px 4px}
-.gauge{position:relative;width:min(360px,84vw);aspect-ratio:1}
-.gauge svg{width:100%;height:100%;overflow:visible;transform:rotate(0deg)}
-.arc-track{stroke:var(--track)}
-.arc-fill{stroke:url(#grad);transition:stroke-dasharray .22s cubic-bezier(.22,1,.36,1)}
-.tick{stroke:var(--line);stroke-width:2}
-.tick-label{fill:var(--dim);font-size:10px;font-weight:700;letter-spacing:.4px}
-.readout{position:absolute;inset:0;display:grid;place-content:center;text-align:center;gap:2px}
-.readout .num{font-size:clamp(44px,11vw,64px);font-weight:800;letter-spacing:-3px;line-height:1;
-  font-variant-numeric:tabular-nums}
-.readout .unit{font-size:12px;font-weight:750;letter-spacing:2.4px;color:var(--muted);text-transform:uppercase}
-.readout .what{font-size:12.5px;color:var(--dim);font-weight:650;letter-spacing:.3px;margin-top:6px;min-height:16px}
-
-.start{position:absolute;inset:0;display:grid;place-content:center;place-items:center;gap:10px;
-  background:radial-gradient(closest-side,color-mix(in srgb,var(--bg) 82%,transparent),transparent);
-  border:0;color:var(--text);cursor:pointer;font-family:inherit;border-radius:50%;transition:.2s}
-.start .circle{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;
-  font-size:19px;font-weight:800;letter-spacing:1.6px;
-  background:linear-gradient(140deg,var(--accent),var(--accent-2));color:#04121a;
-  box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 40%,transparent),0 18px 44px color-mix(in srgb,var(--accent) 30%,transparent)}
-.start:hover .circle{transform:scale(1.045)}
-.start .circle{transition:transform .2s cubic-bezier(.22,1,.36,1)}
-.start:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
-.start small{color:var(--muted);font-size:12px;font-weight:600}
-.start[hidden]{display:none}
-
-.chart{position:relative;padding:0 22px 6px}
-.chart svg{width:100%;height:86px;display:block;overflow:visible}
-.chart .baseline{stroke:var(--line-2);stroke-width:1;stroke-dasharray:3 5}
-.chart .series{fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.chart .area{opacity:.16}
-.status{text-align:center;color:var(--muted);font-size:13.5px;padding:2px 20px 18px;min-height:20px}
-.status b{color:var(--text);font-weight:700}
-
-/* ---------- results ---------- */
-.results{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
-  border-top:1px solid var(--line-2)}
-.stat{background:var(--bg);padding:20px 18px;display:flex;flex-direction:column;gap:6px;position:relative}
-html[data-theme="light"] .stat{background:var(--panel)}
-.stat .k{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:750;letter-spacing:1.4px;
-  text-transform:uppercase;color:var(--dim)}
-.stat .k svg{width:14px;height:14px}
-.stat .v{font-size:27px;font-weight:800;letter-spacing:-1.2px;font-variant-numeric:tabular-nums}
-.stat .v span{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:0;margin-left:4px}
-.stat.dl .k{color:var(--accent)} .stat.ul .k{color:var(--accent-2)}
-
-.meta{display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:center;padding:15px 20px;
-  border-top:1px solid var(--line-2);font-size:12.5px;color:var(--dim)}
-.meta span b{color:var(--muted);font-weight:650}
-.actions{display:flex;gap:10px;justify-content:center;padding:0 20px 20px;flex-wrap:wrap}
-.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);font-family:inherit;
-  font-size:13.5px;font-weight:700;padding:11px 18px;border-radius:12px;cursor:pointer;transition:.18s;
-  display:inline-flex;align-items:center;gap:8px}
-.btn:hover{border-color:var(--accent);transform:translateY(-1px)}
-.btn svg{width:15px;height:15px}
-.btn.primary{background:linear-gradient(140deg,var(--accent),var(--accent-2));color:#04121a;border-color:transparent}
-.btn[hidden]{display:none}
-
-/* ---------- sections ---------- */
-section.block{padding:66px 0 0}
-.head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px;flex-wrap:wrap}
-.head h2{font-size:26px;letter-spacing:-1.1px;margin:0;font-weight:800}
-.head p{color:var(--muted);margin:6px 0 0;font-size:14.5px}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.card{border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);padding:20px;transition:.2s}
-.card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
-.card .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;margin-bottom:14px;
-  background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent)}
-.card .ic svg{width:19px;height:19px}
-.card h3{margin:0 0 6px;font-size:15.5px;letter-spacing:-.3px}
-.card p{margin:0;color:var(--muted);font-size:13.2px;line-height:1.6}
-.card .verdict{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-size:12px;font-weight:750;
-  padding:5px 10px;border-radius:999px;border:1px solid var(--line-2);color:var(--dim)}
-.card .verdict i{width:6px;height:6px;border-radius:50%;background:currentColor}
-.verdict.ok{color:var(--good);border-color:color-mix(in srgb,var(--good) 35%,transparent)}
-.verdict.mid{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 35%,transparent)}
-.verdict.no{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 35%,transparent)}
-
-table{width:100%;min-width:520px;border-collapse:collapse;font-size:13.5px;white-space:nowrap}
-th{text-align:left;font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:var(--dim);
-  font-weight:750;padding:0 14px 10px}
-td{padding:13px 14px;border-top:1px solid var(--line-2);color:var(--muted);font-variant-numeric:tabular-nums}
-td:first-child{color:var(--text);font-weight:650}
-.hist-wrap{border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);padding:16px 6px 6px;overflow-x:auto}
-.empty{color:var(--dim);font-size:13.5px;padding:14px;text-align:center}
-
-footer{margin-top:76px;border-top:1px solid var(--line-2);padding:30px 0 40px;color:var(--dim);font-size:13px}
-.foot-in{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
-
-.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);opacity:0;pointer-events:none;
-  background:var(--text);color:var(--bg);font-size:13px;font-weight:700;padding:11px 18px;border-radius:12px;
-  transition:.25s;z-index:50}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-
-@media(max-width:900px){
-  .nav-links{display:none}
-  .cards{grid-template-columns:repeat(2,1fr)}
-  .results{grid-template-columns:repeat(2,1fr)}
-  .hero{padding-top:40px}
-}
-@media(max-width:520px){
-  .cards{grid-template-columns:1fr}
-  .stat .v{font-size:23px}
-  h1{letter-spacing:-1.4px}
-}
-@media(prefers-reduced-motion:reduce){
-  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
-}
-</style>
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/theme.js"></script>
+<script src="assets/ads.js"></script>
 </head>
 <body>
 
@@ -212,8 +23,9 @@ footer{margin-top:76px;border-top:1px solid var(--line-2);padding:30px 0 40px;co
       <span>Speed<em>Meter</em></span>
     </a>
     <div class="nav-links">
-      <a href="#capability">What your speed handles</a>
-      <a href="#history">History</a>
+      <a href="#top">Speed test</a>
+      <a href="guides/index.html">Guides</a>
+      <a href="about.html">About</a>
     </div>
     <div class="nav-right">
       <button class="ghost" id="theme" type="button" aria-label="Switch colour theme" title="Switch theme">
@@ -318,6 +130,8 @@ footer{margin-top:76px;border-top:1px solid var(--line-2);padding:30px 0 40px;co
     </div>
   </section>
 
+  <div class="ad-slot" data-ad-slot="REPLACE-home-1"></div>
+
   <!-- ============ capability ============ -->
   <section class="block" id="capability">
     <div class="head">
@@ -372,13 +186,73 @@ footer{margin-top:76px;border-top:1px solid var(--line-2);padding:30px 0 40px;co
     </div>
   </section>
 
+  <div class="ad-slot" data-ad-slot="REPLACE-home-2"></div>
+
+  <!-- ============ guides ============ -->
+  <section class="block" id="guides">
+    <div class="head">
+      <div>
+        <h2>Make sense of your result</h2>
+        <p>Short, practical guides — what the numbers mean and what to do about them.</p>
+      </div>
+      <a class="btn" href="guides/index.html">All guides</a>
+    </div>
+    <div class="guide-list">
+      <a class="guide" href="guides/why-your-speed-test-is-slower-than-your-plan.html">
+        <h3>Why your result is slower than your plan</h3>
+        <p>The gap is usually created inside your home. Nine causes, in the order worth checking.</p>
+        <span class="more">Read the guide →</span>
+      </a>
+      <a class="guide" href="guides/improve-your-wifi-speed.html">
+        <h3>How to improve your Wi-Fi speed</h3>
+        <p>Placement, bands, channels and the mesh-versus-extender question — changes that show up in a measurement.</p>
+        <span class="more">Read the guide →</span>
+      </a>
+      <a class="guide" href="guides/ping-jitter-packet-loss-explained.html">
+        <h3>Ping, jitter and packet loss explained</h3>
+        <p>Why a fast connection can still stutter, and the bufferbloat problem most households have.</p>
+        <span class="more">Read the guide →</span>
+      </a>
+      <a class="guide" href="guides/how-much-internet-speed-do-you-need.html">
+        <h3>How much speed do you actually need?</h3>
+        <p>Realistic figures per activity, and how to size a plan without overpaying.</p>
+        <span class="more">Read the guide →</span>
+      </a>
+    </div>
+  </section>
+
 </div>
 </main>
 
 <footer>
-  <div class="wrap foot-in">
-    <div><strong style="color:var(--text)">SpeedMeter</strong> · an honest, no-clutter internet speed test.</div>
-    <div>Runs entirely in your browser. No accounts, no tracking, no stored results.</div>
+  <div class="wrap">
+    <div class="foot-nav">
+      <div>
+        <h4>SpeedMeter</h4>
+        <p class="blurb">A free, no-clutter internet speed test that measures download, upload, ping and jitter straight from your browser — and explains what the numbers mean.</p>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="index.html">Speed test</a></li>
+          <li><a href="guides/index.html">Guides</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy policy</a></li>
+          <li><a href="terms.html">Terms of use</a></li>
+          <li><a href="privacy.html#cookies">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-in">
+      <div>&copy; <span id="year">2026</span> SpeedMeter · an honest, no-clutter internet speed test.</div>
+      <div>Runs entirely in your browser. No accounts, no tracking, no stored results.</div>
+    </div>
   </div>
 </footer>
 
@@ -870,23 +744,6 @@ function toast(msg){
   toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 1900);
 }
 
-/* theme */
-var TKEY = "speedmeter.theme";
-function applyTheme(t){
-  document.documentElement.setAttribute("data-theme", t);
-  var m = document.querySelector('meta[name="theme-color"]');
-  if(m) m.setAttribute("content", t === "light" ? "#f5f7fc" : "#080b14");
-  try{ localStorage.setItem(TKEY, t); }catch(e){}
-}
-(function initTheme(){
-  var saved = null;
-  try{ saved = localStorage.getItem(TKEY); }catch(e){}
-  if(!saved) saved = (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) ? "light" : "dark";
-  applyTheme(saved);
-})();
-$("theme").addEventListener("click", function(){
-  applyTheme(document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light");
-});
 
 /* space / enter starts a test when nothing else is focused */
 document.addEventListener("keydown", function(e){

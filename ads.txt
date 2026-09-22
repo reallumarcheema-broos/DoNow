@@ -1,0 +1,4 @@
+# SpeedMeter — AdSense authorised sellers file.
+# Replace pub-XXXXXXXXXXXXXXXX with your own publisher ID (the digits from
+# the ca-pub-... value in assets/ads.js) and keep this file at the site root.
+google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0

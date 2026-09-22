@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About SpeedMeter — who we are and how the test works</title>
+<meta name="description" content="SpeedMeter is a free browser-based internet speed test. Here is who runs it, how the measurements are taken, and what the numbers do and do not tell you.">
+<meta name="theme-color" content="#080b14">
+<meta property="og:title" content="About SpeedMeter — who we are and how the test works">
+<meta property="og:description" content="SpeedMeter is a free browser-based internet speed test. Here is who runs it, how the measurements are taken, and what the numbers do and do not tell you.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230d1220'/><path d='M56 12 30 56h18l-6 32 28-46H52z' fill='%2322d3ee'/></svg>">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/theme.js"></script>
+<script src="assets/ads.js"></script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html" aria-label="SpeedMeter home">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="currentColor" opacity=".08"/><path d="M56 12 30 56h18l-6 32 28-46H52z" fill="url(#bg1)"/><defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#818cf8"/></linearGradient></defs></svg>
+      <span>Speed<em>Meter</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Speed test</a>
+      <a href="guides/index.html">Guides</a>
+      <a href="about.html">About</a>
+    </div>
+    <div class="nav-right">
+      <button class="ghost" id="theme" type="button" aria-label="Switch colour theme" title="Switch theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+  <header class="page-head">
+    <p class="crumb"><a href="index.html">Home</a> · About</p>
+    <h1>About SpeedMeter</h1>
+    <p class="lede">A speed test should give you a straight answer and then get out of the way. That is the whole idea behind this site.</p>
+  </header>
+  <div class="prose">
+    <h2>Why this site exists</h2>
+    <p>Most speed tests bury the result you came for. You land on the page, wait through an advert, watch a dial spin, and end up with a number you are not sure how to read — is 40 Mbps good? Is 18 ms of jitter a problem? Should the upload figure really be that much smaller than the download one?</p>
+    <p>SpeedMeter was built to answer the question directly. One button starts the test, the result appears in about twenty-five seconds, and underneath it you get a plain-English verdict: whether your connection can carry 4K video, hold a stable video call, survive a competitive game, or keep several people happy at once. No account, no email address, no app.</p>
+
+    <h2>How the measurement works</h2>
+    <p>Everything runs inside your browser. There is no SpeedMeter server that your data passes through — the test opens connections to a global edge network and measures how quickly bytes actually move.</p>
+    <ul>
+      <li><strong>Latency</strong> — fourteen very small requests are timed individually. The reported ping is the median of the better samples, which keeps one unlucky packet from ruining an otherwise accurate figure.</li>
+      <li><strong>Jitter</strong> — the average difference between consecutive latency samples. It is the number that explains why a call stutters on a connection that looks fast on paper.</li>
+      <li><strong>Download</strong> — five parallel streams pull data for roughly ten seconds. Parallel connections matter: a single stream is often limited by the far end rather than by your line, which makes fast connections look slower than they are. The first second and a half is discarded because TCP starts cautiously and ramps up.</li>
+      <li><strong>Upload</strong> — the same approach in reverse, with three parallel streams over about nine seconds.</li>
+    </ul>
+    <p>The gauge and the graph are smoothed while the test runs so the needle does not flicker, but the final figures are always calculated from raw byte counts and elapsed time. Nothing is rounded up to flatter your connection.</p>
+
+    <h2>What the result can and cannot tell you</h2>
+    <p>A speed test measures the path between this browser and one edge server at one moment. That is genuinely useful, but it has limits worth knowing:</p>
+    <ul>
+      <li>It measures your <strong>current conditions</strong>, including Wi-Fi, the device you are on, and whatever else is using the connection right now — not the maximum your line is capable of.</li>
+      <li>It cannot tell you where a bottleneck sits. A poor result might be your router, your neighbour's microwave, an old laptop's wireless card, or genuine congestion at your provider.</li>
+      <li>It is not evidence on its own. If you are challenging an ISP, take several tests at different times of day over a wired connection and keep the record — the history table on the home page is kept in your browser for exactly that reason.</li>
+    </ul>
+
+    <h2>Privacy, in one paragraph</h2>
+    <p>SpeedMeter has no backend, no accounts and no analytics. Your test history and your light or dark preference live in your own browser's local storage and are never transmitted anywhere. The test payloads are throwaway random bytes, never your files. The one unavoidable disclosure is that the edge network carrying the test sees your IP address, exactly as it would for any website you visit. The <a href="privacy.html">privacy policy</a> spells all of this out, including how advertising on this site works.</p>
+
+    <h2>Corrections and suggestions</h2>
+    <p>If a guide here is wrong, out of date, or missing something obvious, that is worth knowing about — the <a href="contact.html">contact page</a> explains how to get in touch. Reports of measurements that look clearly incorrect are especially welcome, ideally with the figures you saw and what you expected.</p>
+  </div>
+  <div class="cta">
+    <h3>Check your own connection</h3>
+    <p>Run the test and see where your line actually stands.</p>
+    <a class="btn primary" href="index.html">Run the speed test</a>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-nav">
+      <div>
+        <h4>SpeedMeter</h4>
+        <p class="blurb">A free, no-clutter internet speed test that measures download, upload, ping and jitter straight from your browser — and explains what the numbers mean.</p>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="index.html">Speed test</a></li>
+          <li><a href="guides/index.html">Guides</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy policy</a></li>
+          <li><a href="terms.html">Terms of use</a></li>
+          <li><a href="privacy.html#cookies">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-in">
+      <div>&copy; <span id="year">2026</span> SpeedMeter · an honest, no-clutter internet speed test.</div>
+      <div>Runs entirely in your browser. No accounts, no tracking, no stored results.</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

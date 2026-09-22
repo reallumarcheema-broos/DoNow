@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ping, jitter and packet loss explained — SpeedMeter</title>
+<meta name="description" content="What ping, jitter and packet loss actually measure, what counts as a good figure, and how to fix a connection that is fast but unstable.">
+<meta name="theme-color" content="#080b14">
+<meta property="og:title" content="Ping, jitter and packet loss explained — SpeedMeter">
+<meta property="og:description" content="What ping, jitter and packet loss actually measure, what counts as a good figure, and how to fix a connection that is fast but unstable.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230d1220'/><path d='M56 12 30 56h18l-6 32 28-46H52z' fill='%2322d3ee'/></svg>">
+<link rel="stylesheet" href="../assets/styles.css">
+<script src="../assets/theme.js"></script>
+<script src="../assets/ads.js"></script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="../index.html" aria-label="SpeedMeter home">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="currentColor" opacity=".08"/><path d="M56 12 30 56h18l-6 32 28-46H52z" fill="url(#bg1)"/><defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#818cf8"/></linearGradient></defs></svg>
+      <span>Speed<em>Meter</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="../index.html">Speed test</a>
+      <a href="../guides/index.html">Guides</a>
+      <a href="../about.html">About</a>
+    </div>
+    <div class="nav-right">
+      <button class="ghost" id="theme" type="button" aria-label="Switch colour theme" title="Switch theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+  <header class="page-head">
+    <p class="crumb"><a href="../index.html">Home</a> · <a href="index.html">Guides</a></p>
+    <h1>Ping, jitter and packet loss explained</h1>
+    <p class="lede">Bandwidth is how much the road carries. These three numbers are about whether the traffic flows smoothly — and they decide how your connection feels.</p>
+    <p class="byline">SpeedMeter · updated September 2026</p>
+  </header>
+  <div class="ad-slot" data-ad-slot="REPLACE-top"></div>
+  <div class="prose">
+    <p>People shop for megabits and then wonder why a 500 Mbps line makes calls sound like a robot. Bandwidth answers one question: how much data can move per second. It says nothing about how promptly or how evenly that data arrives, which is what interactive things — calls, games, remote desktops — actually depend on.</p>
+
+    <h2>Ping (latency)</h2>
+    <p>Ping is the round trip: how long a small packet takes to reach a server and come back, in milliseconds. It is governed mostly by distance and by the number of hops along the way, and it sets a floor on how responsive anything can feel. No amount of bandwidth makes a 200 ms round trip feel immediate.</p>
+    <table>
+      <thead><tr><th>Ping</th><th>How it feels</th></tr></thead>
+      <tbody>
+        <tr><td>Under 20 ms</td><td>Excellent — indistinguishable from local</td></tr>
+        <tr><td>20–50 ms</td><td>Very good; fine for competitive gaming</td></tr>
+        <tr><td>50–100 ms</td><td>Normal; calls and most games are comfortable</td></tr>
+        <tr><td>100–150 ms</td><td>Noticeable lag in fast games, slight talk-over on calls</td></tr>
+        <tr><td>Over 150 ms</td><td>Interactive use is frustrating</td></tr>
+      </tbody>
+    </table>
+    <p>Connection type matters enormously here. Fibre typically lands in single digits to low tens; cable slightly higher; older DSL higher again; 4G and 5G vary with signal and congestion; traditional geostationary satellite starts around 600 ms because of the distance to orbit, which no upgrade can shorten.</p>
+
+    <h2>Jitter</h2>
+    <p>Jitter is the variation in ping between one sample and the next. If five packets take 20, 21, 19, 20 and 22 ms, jitter is negligible. If they take 20, 95, 30, 140 and 25 ms, the average still looks acceptable while the connection is, in practice, unusable for a call.</p>
+    <p>This is the measurement that explains the common complaint: "my internet is fast but video calls are terrible." Real-time audio and video arrive as a steady stream of small packets that must be played in order at a fixed rate. When arrival times scatter, the receiver either waits — adding delay — or plays what it has, producing the chopped, robotic sound everyone recognises.</p>
+    <ul>
+      <li><strong>Under 10 ms</strong> — excellent, nothing to do.</li>
+      <li><strong>10–30 ms</strong> — acceptable; calls hold up.</li>
+      <li><strong>Over 30 ms</strong> — expect stutter in calls and games.</li>
+    </ul>
+
+    <h2>Packet loss</h2>
+    <p>Packet loss is the share of packets that never arrive. For file transfers the protocol quietly resends them and you lose only a little speed. For live audio and video there is no time to resend, so the gap is simply heard or seen. Loss above about 1% is noticeable in a call; above 3% it is disruptive. Persistent loss on a wired connection usually points at faulty cabling, a failing router or a genuine fault on the line, and is worth reporting.</p>
+
+    <h2>Bufferbloat: the one most people have</h2>
+    <p>Here is the pattern that catches households out. Ping looks fine when the connection is idle, and collapses the moment anyone starts an upload or a large download. A call that was perfect degrades badly while a backup runs.</p>
+    <p>The cause is oversized buffers in network equipment. When a link saturates, packets queue instead of being dropped, and the queue can grow to hundreds of milliseconds — so your time-critical packets sit behind a mass of bulk traffic. A connection can be perfectly fast and still feel broken under load for this reason alone.</p>
+    <p>Two things help, and both live in the router: enable <strong>Smart Queue Management</strong> (also badged SQM, fq_codel or CAKE) if it is offered, and, where a router asks you to set bandwidth limits for it, set them slightly below your measured speed so the queue forms in your router, where it can be managed, rather than in your provider's equipment where it cannot.</p>
+
+    <h2>Fixing an unstable connection</h2>
+    <ol>
+      <li><strong>Use a cable for anything that matters.</strong> Wi-Fi is a shared radio medium; jitter is intrinsic to it. A cable removes an entire class of problem in one step.</li>
+      <li><strong>Check for interference</strong> if a cable is impossible — a congested channel is a common jitter source.</li>
+      <li><strong>Look for a saturating device.</strong> Cloud backups, game updates and photo sync are the usual culprits; schedule them overnight.</li>
+      <li><strong>Enable SQM</strong> in the router as described above.</li>
+      <li><strong>Test at several times of day.</strong> Jitter that only appears in the evening is congestion at your provider, and the fix is a support ticket with evidence, not another setting.</li>
+      <li><strong>Try another DNS resolver.</strong> This does not change your speed, but slow name lookups make browsing feel sluggish in a way people mistake for low bandwidth.</li>
+    </ol>
+
+    <div class="callout">
+      <p><strong>Worth knowing:</strong> the ping and jitter figures on this site are measured against a nearby edge server on an idle connection. To see whether bufferbloat is your problem, start a large upload and run the test again — if ping and jitter jump sharply, you have found it.</p>
+    </div>
+
+    <h2>What to aim for</h2>
+    <p>For everyday browsing and streaming, anything under 100 ms with modest jitter is fine, and bandwidth is what matters. For competitive gaming, aim for under 50 ms with jitter in single digits, and accept that physical distance to the game server sets a floor you cannot beat. For working from home, jitter and packet loss matter more than the download figure you are paying for — which is why a modest fibre line often beats a headline-grabbing one on a congested network.</p>  </div>
+  <div class="ad-slot" data-ad-slot="REPLACE-foot"></div>
+  <div class="cta">
+    <h3>Check your own connection</h3>
+    <p>Run the test and see where your line actually stands.</p>
+    <a class="btn primary" href="../index.html">Run the speed test</a>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-nav">
+      <div>
+        <h4>SpeedMeter</h4>
+        <p class="blurb">A free, no-clutter internet speed test that measures download, upload, ping and jitter straight from your browser — and explains what the numbers mean.</p>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="../index.html">Speed test</a></li>
+          <li><a href="../guides/index.html">Guides</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="../privacy.html">Privacy policy</a></li>
+          <li><a href="../terms.html">Terms of use</a></li>
+          <li><a href="../privacy.html#cookies">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-in">
+      <div>&copy; <span id="year">2026</span> SpeedMeter · an honest, no-clutter internet speed test.</div>
+      <div>Runs entirely in your browser. No accounts, no tracking, no stored results.</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
