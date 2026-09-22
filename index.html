@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Velocibit — Internet Speed Test</title>
-<meta name="description" content="Velocibit measures your real download speed, upload speed, ping and jitter in seconds. No sign-up, no clutter — just an accurate, beautiful internet speed test.">
+<title>SpeedMeter — Internet Speed Test</title>
+<meta name="description" content="SpeedMeter measures your real download speed, upload speed, ping and jitter in seconds. No sign-up, no clutter — just an accurate, beautiful internet speed test.">
 <meta name="theme-color" content="#080b14">
-<meta property="og:title" content="Velocibit — Internet Speed Test">
+<meta property="og:title" content="SpeedMeter — Internet Speed Test">
 <meta property="og:description" content="Measure download, upload, ping and jitter in seconds.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230d1220'/><path d='M56 12 30 56h18l-6 32 28-46H52z' fill='%2322d3ee'/></svg>">
@@ -179,14 +179,6 @@ td:first-child{color:var(--text);font-weight:650}
 .hist-wrap{border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);padding:16px 6px 6px;overflow-x:auto}
 .empty{color:var(--dim);font-size:13.5px;padding:14px;text-align:center}
 
-details{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:0 18px;margin-bottom:10px}
-summary{cursor:pointer;padding:16px 0;font-weight:700;font-size:14.5px;list-style:none;display:flex;
-  justify-content:space-between;align-items:center;gap:14px}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"+";color:var(--accent);font-size:19px;font-weight:700;line-height:1}
-details[open] summary::after{content:"−"}
-details p{margin:0 0 17px;color:var(--muted);font-size:13.6px;line-height:1.68}
-
 footer{margin-top:76px;border-top:1px solid var(--line-2);padding:30px 0 40px;color:var(--dim);font-size:13px}
 .foot-in{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
 
@@ -215,15 +207,13 @@ footer{margin-top:76px;border-top:1px solid var(--line-2);padding:30px 0 40px;co
 
 <nav class="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top" aria-label="Velocibit home">
+    <a class="brand" href="#top" aria-label="SpeedMeter home">
       <svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="24" fill="currentColor" opacity=".08"/><path d="M56 12 30 56h18l-6 32 28-46H52z" fill="url(#bg1)"/><defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#818cf8"/></linearGradient></defs></svg>
-      Veloci<em>bit</em>
+      <span>Speed<em>Meter</em></span>
     </a>
     <div class="nav-links">
-      <a href="#how">How it works</a>
-      <a href="#capability">What your speed does</a>
+      <a href="#capability">What your speed handles</a>
       <a href="#history">History</a>
-      <a href="#faq">FAQ</a>
     </div>
     <div class="nav-right">
       <button class="ghost" id="theme" type="button" aria-label="Switch colour theme" title="Switch theme">
@@ -382,59 +372,12 @@ footer{margin-top:76px;border-top:1px solid var(--line-2);padding:30px 0 40px;co
     </div>
   </section>
 
-  <!-- ============ how ============ -->
-  <section class="block" id="how">
-    <div class="head">
-      <div>
-        <h2>How the test works</h2>
-        <p>Four measurements, one honest picture of your connection.</p>
-      </div>
-    </div>
-    <div class="cards">
-      <div class="card">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
-        <h3>1 · Latency</h3>
-        <p>A burst of tiny requests measures how long a round trip to the nearest edge server takes. Lower is better.</p>
-      </div>
-      <div class="card">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v13m0 0 5-5m-5 5-5-5M4 20h16"/></svg></div>
-        <h3>2 · Download</h3>
-        <p>Several parallel streams pull data for about ten seconds, so a single congested connection can't understate your line.</p>
-      </div>
-      <div class="card">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V7m0 0 5 5m-5-5-5 5M4 4h16"/></svg></div>
-        <h3>3 · Upload</h3>
-        <p>The same idea in reverse — the number that decides how your video calls, backups and posts behave.</p>
-      </div>
-      <div class="card">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l3 7 5-15 3 8h4"/></svg></div>
-        <h3>4 · Jitter</h3>
-        <p>How much your latency wobbles between samples. High jitter is what makes calls stutter even on a fast line.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ faq ============ -->
-  <section class="block" id="faq">
-    <div class="head"><div><h2>Questions people ask</h2><p>Short answers, no marketing.</p></div></div>
-    <details><summary>Why is my result lower than the speed I pay for?</summary>
-      <p>Your plan speed is measured at the router under ideal conditions. Wi-Fi distance, older hardware, VPNs, busy hours and other devices on the network all take a share. Test again over a cable, with other devices idle, to see how close you get to the advertised figure.</p></details>
-    <details><summary>Does this test use my data allowance?</summary>
-      <p>Yes. A full run transfers roughly 100–500 MB depending on how fast your line is — the quicker your connection, the more data it moves in the same number of seconds. On a metered or mobile plan, run it sparingly.</p></details>
-    <details><summary>What counts as a good ping?</summary>
-      <p>Under 30 ms feels instant and is excellent for gaming and calls. 30–70 ms is comfortable for almost everything. Above 120 ms you'll notice lag in games and talk-over in video calls, even if your download speed looks impressive.</p></details>
-    <details><summary>Where does my data go?</summary>
-      <p>Measurements run between your browser and Cloudflare's public speed-test edge endpoints; the payloads are throwaway bytes, not your files. Velocibit itself has no backend and no account system — your history lives in this browser's local storage and never leaves the device.</p></details>
-    <details><summary>Why do two tests in a row differ?</summary>
-      <p>Networks are shared and bursty. A few percent of variation between runs is normal; large swings usually mean Wi-Fi interference or congestion. Take the best of three runs as your realistic ceiling.</p></details>
-  </section>
-
 </div>
 </main>
 
 <footer>
   <div class="wrap foot-in">
-    <div><strong style="color:var(--text)">Velocibit</strong> · an honest, no-clutter internet speed test.</div>
+    <div><strong style="color:var(--text)">SpeedMeter</strong> · an honest, no-clutter internet speed test.</div>
     <div>Runs entirely in your browser. No accounts, no tracking, no stored results.</div>
   </div>
 </footer>
@@ -446,9 +389,9 @@ footer{margin-top:76px;border-top:1px solid var(--line-2);padding:30px 0 40px;co
 "use strict";
 
 /* ---------------------------------------------------------------
-   Velocibit — client-side speed test.
+   SpeedMeter — client-side speed test.
    Measurements run against Cloudflare's public speed-test edge
-   endpoints; nothing is sent to a Velocibit server (there isn't one).
+   endpoints; nothing is sent to a SpeedMeter server (there isn't one).
 ----------------------------------------------------------------*/
 var CF = "https://speed.cloudflare.com";
 
@@ -757,7 +700,7 @@ function paintCapability(d, u, p, j){
 }
 
 /* ---------------- history ---------------- */
-var HKEY = "velocibit.history.v1";
+var HKEY = "speedmeter.history.v1";
 function readHistory(){
   try{ return JSON.parse(localStorage.getItem(HKEY) || "[]"); }catch(e){ return []; }
 }
@@ -901,7 +844,7 @@ $("clearBtn").addEventListener("click", function(){
 copyBtn.addEventListener("click", function(){
   var r = state.results;
   if(!r) return;
-  var text = "Velocibit speed test — " + new Date(r.t).toLocaleString() + "\n" +
+  var text = "SpeedMeter speed test — " + new Date(r.t).toLocaleString() + "\n" +
     "Download: " + fmt(r.down) + " Mbps\n" +
     "Upload:   " + fmt(r.up) + " Mbps\n" +
     "Ping:     " + fmtMs(r.ping) + " ms\n" +
@@ -928,7 +871,7 @@ function toast(msg){
 }
 
 /* theme */
-var TKEY = "velocibit.theme";
+var TKEY = "speedmeter.theme";
 function applyTheme(t){
   document.documentElement.setAttribute("data-theme", t);
   var m = document.querySelector('meta[name="theme-color"]');
@@ -949,7 +892,7 @@ $("theme").addEventListener("click", function(){
 document.addEventListener("keydown", function(e){
   if(e.key !== " " && e.key !== "Enter") return;
   var t = e.target.tagName;
-  if(t === "BUTTON" || t === "INPUT" || t === "TEXTAREA" || t === "SUMMARY" || t === "A") return;
+  if(t === "BUTTON" || t === "INPUT" || t === "TEXTAREA" || t === "A") return;
   if(state.running) return;
   e.preventDefault();
   runTest();
